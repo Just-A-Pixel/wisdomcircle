@@ -7,9 +7,9 @@ exports.up = (pgm) => {
         id: "id",
         firstName: { type: "varchar(1000)", notNull: true },
         lastName: { type: "varchar(1000)", notNull: true },
-        email: {type: "varchar(1000)"},
-        phone: {type: "varchar(10)"},
-        password: {type: "varchar(60)", notNull: true},
+        email: { type: "varchar(1000)", unique: true, notNull: true },
+        phone: { type: "varchar(10)", unique: true, notNull: true },
+        password: { type: "varchar(60)", notNull: true },
         createdAt: {
             type: "timestamp",
             notNull: true,
@@ -18,14 +18,11 @@ exports.up = (pgm) => {
         updatedAt: {
             type: "timestamp",
             notNull: true,
-            default: pgm.func("current_timestamp")
-        }
+            default: pgm.func("current_timestamp"),
+        },
     });
-
-    
 };
 
 exports.down = (pgm) => {
-    pgm.dropTable('users')
+    pgm.dropTable("users");
 };
-

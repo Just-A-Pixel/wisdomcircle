@@ -13,12 +13,15 @@ const User = sq.define("user", {
     },
 
     email: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: false,
+        unique: true
     },
 
     phone: {
         type: DataTypes.STRING(10),
+        allowNull: false,
+        unique: true
     },
 
     password: {
