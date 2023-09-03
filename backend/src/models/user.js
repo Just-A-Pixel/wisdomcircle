@@ -18,6 +18,11 @@ const User = sq.define("user", {
         unique: true
     },
 
+    extension: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+
     phone: {
         type: DataTypes.STRING(10),
         allowNull: false,
