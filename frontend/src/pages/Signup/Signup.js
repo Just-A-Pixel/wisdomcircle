@@ -5,8 +5,10 @@ import FormContainer from "../../components/form/FormContainer";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
+import AuthText from "../../components/form/AuthText"
 
 import PhoneInput from "../../components/form/PhoneInput";
+import Submit from "../../components/form/Submit";
 const Signup = () => {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
@@ -63,15 +65,8 @@ const Signup = () => {
 
     return (
         <>
-            <img src={logo} className="my-[40px] mx-auto" />
             <FormContainer>
-                <h1>Sign Up to WisdomCircle</h1>
-                <h3 className="text-charcoal">
-                    Already have an account?{" "}
-                    <span onClick={e => navigate("/login")} className="font-semibold text-royalBlue">
-                        Sign in
-                    </span>
-                </h3>
+                <AuthText signup={true} />
                 <InputBox
                     type="text"
                     placeholder="First Name"
@@ -134,13 +129,9 @@ const Signup = () => {
                 >
                     Password does not match
                 </label>
+            <Submit signup = {true} submitData={submitData}/>
+
             </FormContainer>
-            <div
-                className="bg-yellow w-[320px] mx-auto mt-[16px] h-[40px] text-center pt-[8px] font-sans font-semibold text-[16px]"
-                onClick={(e) => submitData()}
-            >
-                Sign Up
-            </div>
         </>
     );
 };
