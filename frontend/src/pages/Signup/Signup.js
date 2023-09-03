@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
-import logo from "../../assets/logo.svg";
+
 import InputBox from "../../components/form/InputBox";
 import FormContainer from "../../components/form/FormContainer";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
-import AuthText from "../../components/form/AuthText"
+import AuthText from "../../components/form/AuthText";
 
 import PhoneInput from "../../components/form/PhoneInput";
 import Submit from "../../components/form/Submit";
+import Banner from "../../components/form/Banner";
 const Signup = () => {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
@@ -21,8 +22,6 @@ const Signup = () => {
     const [confirmPassword, setConfirmPassword] = useState("");
 
     const [cookies, setCookie, removeCookie] = useCookies(["jwt"]);
-    const navigate = useNavigate();
-
 
     const submitData = async () => {
         const data = {
@@ -35,20 +34,16 @@ const Signup = () => {
         };
 
         try {
-            const res = await axios.post(
+            await axios.post(
                 "http://localhost:4000/api/auth/signup",
                 data
             );
-
-            console.log(res)
-            // setCookie("jwt", res.data.accessToken);
-            // navigate("/home")
         } catch (err) {
             console.log(err.response.status);
             if (err.response.status === 400) {
                 alert("Email or phone already exists!");
             } else {
-                console.log(err)
+                console.log(err);
                 alert("An unknown error has occurred");
             }
         }
@@ -64,7 +59,8 @@ const Signup = () => {
     };
 
     return (
-        <>
+        <div className="flex justify-start">
+            <Banner />
             <FormContainer>
                 <AuthText signup={true} />
                 <InputBox
@@ -129,10 +125,9 @@ const Signup = () => {
                 >
                     Password does not match
                 </label>
-            <Submit signup = {true} submitData={submitData}/>
-
+                <Submit signup={true} submitData={submitData} />
             </FormContainer>
-        </>
+        </div>
     );
 };
 
