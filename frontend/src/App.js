@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Home from "./pages/Home/index"
 import Login from "./pages/Login/index"
-import Signup from "./pages/Signup/Login"
+import Signup from "./pages/Signup/Signup"
 
 function App() {
     // console.log(CountryList.getAll()[1])

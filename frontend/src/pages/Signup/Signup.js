@@ -3,9 +3,11 @@ import logo from "../../assets/logo.svg";
 import InputBox from "../../components/form/InputBox";
 import FormContainer from "../../components/form/FormContainer";
 import axios from "axios";
+import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
 
 import PhoneInput from "../../components/form/PhoneInput";
-const Login = () => {
+const Signup = () => {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
@@ -16,6 +18,10 @@ const Login = () => {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
 
+    const [cookies, setCookie, removeCookie] = useCookies(["jwt"]);
+    const navigate = useNavigate();
+
+
     const submitData = async () => {
         const data = {
             firstName,
@@ -23,16 +29,27 @@ const Login = () => {
             email,
             extension,
             phone,
-            password
-        }
+            password,
+        };
 
         try {
-            const res = await axios.post("http://localhost:4000/api/auth/signup", data)
+            const res = await axios.post(
+                "http://localhost:4000/api/auth/signup",
+                data
+            );
+
             console.log(res)
+            // setCookie("jwt", res.data.accessToken);
+            // navigate("/home")
         } catch (err) {
-            console.log(err)
+            console.log(err.response.status);
+            if (err.response.status === 400) {
+                alert("Email or phone already exists!");
+            } else {
+                console.log(err)
+                alert("An unknown error has occurred");
+            }
         }
-        
     };
 
     useEffect(() => {
@@ -51,7 +68,7 @@ const Login = () => {
                 <h1>Sign Up to WisdomCircle</h1>
                 <h3 className="text-charcoal">
                     Already have an account?{" "}
-                    <span className="font-semibold text-royalBlue">
+                    <span onClick={e => navigate("/login")} className="font-semibold text-royalBlue">
                         Sign in
                     </span>
                 </h3>
@@ -102,11 +119,17 @@ const Login = () => {
                     placeholder="Confirm Password"
                     state={confirmPassword}
                     setState={setConfirmPassword}
-                    isValid={password === confirmPassword || confirmPassword.length === 0}
+                    isValid={
+                        password === confirmPassword ||
+                        confirmPassword.length === 0
+                    }
                 />
                 <label
                     className={`${
-                        password != confirmPassword && confirmPassword.length !== 0 ? "" : "hidden"
+                        password != confirmPassword &&
+                        confirmPassword.length !== 0
+                            ? ""
+                            : "hidden"
                     } font-sans text-[12px] text-red`}
                 >
                     Password does not match
@@ -122,4 +145,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default Signup;
