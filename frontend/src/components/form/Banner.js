@@ -1,12 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import logo from "../../assets/logoLarge.svg";
 import mascot from "../../assets/mascot.png";
 import line from "../../assets/line.svg"
 
 const Banner = () => {
-    useEffect(() => {
-        console.log("refreshed")
-    }) 
     return (
         <div className="bg-grey text-white w-[526px] hidden lg:block">
             <div className="flex flex-col h-[100%] justify-around">

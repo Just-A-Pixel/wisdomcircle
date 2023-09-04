@@ -25,8 +25,11 @@ const PhoneInput = ({
             <div className="flex justify-between">
                 <select
                     onChange={(e) => setExtension(e.target.value)}
-                    className=" mt-[16px] text-[28px] w-[64px] border border-gray-80 mr-[10px]"
+                    className=" mt-[16px] text-[28px] w-[64px] border border-gray-80 mr-[10px] rounded-lg"
                 >
+                    <option>
+                        --
+                    </option>
                     {options.map((e) => {
                         return (
                             <option
@@ -43,7 +46,7 @@ const PhoneInput = ({
                     placeholder="phone"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
-                    className={`font-sans text-[14px] px-[16px] py-[12px] w-[320px] mt-[16px] border ${validPhone?"border-gray-80  focus:border-black":"border-red focus:border-red text-red"}  focus:border-black focus:outline-none`}
+                    className={`font-sans text-[14px] px-[16px] py-[12px] w-[320px] mt-[16px] rounded-lg border ${validPhone?"border-gray-80  focus:border-black":"border-red focus:border-red text-red"}  focus:border-black focus:outline-none`}
                 ></input>
             </div>
             <label

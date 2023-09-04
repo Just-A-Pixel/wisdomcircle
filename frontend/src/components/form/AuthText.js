@@ -15,7 +15,7 @@ const AuthText = ({ signup = false }) => {
                     onClick={(e) =>
                         signup ? navigate("/login") : navigate("/signup")
                     }
-                    className="font-semibold text-royalBlue"
+                    className="font-semibold text-royalBlue cursor-pointer"
                 >
                     {signup ? "Sign In" : "Sign Up"}
                 </span>

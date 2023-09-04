@@ -20,25 +20,32 @@ const Login = () => {
 
     const [cookies, setCookie, removeCookie] = useCookies(["jwt"]);
     const navigate = useNavigate();
-    // const checkValueValidity = () => {
-    //     var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    //     var phoneFormat = /^\d+$/;
+    const checkValueValidity = () => {
+        var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        var phoneFormat = /^\d+$/;
 
-    //     let emailMatch = value.match(mailformat) != null ? true : false;
-    //     let phoneMatch = value.match(phoneFormat) != null && value.length == 10 ? true : false;
+        let emailMatch = checkEmail()
+        let phoneMatch = value.match(phoneFormat) != null && value.length == 10 ? true : false;
 
-    //     if(emailMatch || phoneMatch) return "none"
-    //     else if(!phoneMatch) return "phone"
-    // };
+        if(emailMatch || phoneMatch || value.length == 0) return "none"
+        else if(!phoneMatch) return "phone"
+    };
 
-    // useEffect(() => {
-    //   setInvalidEmailOrPhone(checkValueValidity())
-    // }, [value])
+    useEffect(() => {
+      setInvalidEmailOrPhone(checkValueValidity())
+      let validity = checkValueValidity()
+      if(validity === "none") {
+        setInvalidMessage({code: null, message: null})
+      } else {
+        setInvalidMessage({code: "phone", message: "Please enter a valid phone number"})
+      }
+    }, [value])
 
     const checkEmail = () => {
         var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
         return value.match(mailformat) != null ? true : false;
     };
+
     const submitData = async () => {
         if (value === "" || value === null) {
             alert("Phone or email cannot be empty");

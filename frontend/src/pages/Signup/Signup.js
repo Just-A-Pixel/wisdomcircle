@@ -10,6 +10,9 @@ import AuthText from "../../components/form/AuthText";
 import PhoneInput from "../../components/form/PhoneInput";
 import Submit from "../../components/form/Submit";
 import Banner from "../../components/form/Banner";
+
+
+import VerifyEmailModal from "../../components/form/VerifyEmailModal";
 const Signup = () => {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
@@ -20,10 +23,30 @@ const Signup = () => {
     const [validPhone, setValidPhone] = useState(false);
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
-
-    
+    const [hideModal, setHideModal] = useState(true);
 
     const submitData = async () => {
+        if (
+            firstName === "" ||
+            lastName === "" ||
+            email === "" ||
+            extension === "" ||
+            phone === "" ||
+            password === ""
+        ) {
+            alert("Fields cannot be empty");
+            return;
+        }
+
+        if (!validEmail) {
+            alert("Please enter valid email");
+        }
+
+        if (password !== confirmPassword) {
+            alert("Please confirm the password");
+            return;
+        }
+
         const data = {
             firstName,
             lastName,
@@ -34,10 +57,8 @@ const Signup = () => {
         };
 
         try {
-            await axios.post(
-                "http://localhost:4000/api/auth/signup",
-                data
-            );
+            await axios.post("http://localhost:4000/api/auth/signup", data);
+            setHideModal(false)
         } catch (err) {
             console.log(err.response.status);
             if (err.response.status === 400) {
@@ -127,6 +148,8 @@ const Signup = () => {
                 </label>
                 <Submit signup={true} submitData={submitData} />
             </FormContainer>
+
+            <VerifyEmailModal email={email} hidden={hideModal} setHideModal={setHideModal}/>
         </div>
     );
 };
