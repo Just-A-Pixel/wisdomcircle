@@ -4,7 +4,7 @@ import InputBox from "../../components/form/InputBox";
 import FormContainer from "../../components/form/FormContainer";
 import axios from "axios";
 import { useCookies } from "react-cookie";
-import { useNavigate } from "react-router-dom";
+
 import AuthText from "../../components/form/AuthText";
 
 import PhoneInput from "../../components/form/PhoneInput";
@@ -21,7 +21,7 @@ const Signup = () => {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
 
-    const [cookies, setCookie, removeCookie] = useCookies(["jwt"]);
+    
 
     const submitData = async () => {
         const data = {

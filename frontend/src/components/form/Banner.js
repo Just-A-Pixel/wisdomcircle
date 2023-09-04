@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import logo from "../../assets/logoLarge.svg";
 import mascot from "../../assets/mascot.png";
+import line from "../../assets/line.svg"
 
 const Banner = () => {
     useEffect(() => {
@@ -10,12 +11,14 @@ const Banner = () => {
         <div className="bg-grey text-white w-[526px] hidden lg:block">
             <div className="flex flex-col h-[100%] justify-around">
                 {/* logo */}
-                <img src={logo} className=" max-w-[217px] mx-auto" />
+                <img src={logo} className=" max-w-[217px] mx-auto mt-[216px]" />
                 {/* flex */}
-                <div className="flex border border-red">
+                <div className="flex mt-auto">
                     {/* logo */}
-
-                    <img src={mascot} className="w-[165px] " />
+                    <div>
+                        <img src={mascot} className="w-[165px] h-[219px] mt-[90px] object-cover" />
+                    </div>
+                    
 
                     {/* text */}
                     <div>
@@ -25,6 +28,8 @@ const Banner = () => {
                             interests. We have both part-time and full-time
                             roles that can be done online and in-person.
                         </p>
+                        <img src={line} className="mt-[48px]"/>
+                        <h3 className="mt-[64px] mb-[24px]">Please contact us at <span className="font-semibold">+91-9380644532</span> if you need any assistance.</h3>
                     </div>
                 </div>
             </div>
