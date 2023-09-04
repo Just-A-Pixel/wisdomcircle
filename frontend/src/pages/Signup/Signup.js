@@ -3,14 +3,10 @@ import React, { useEffect, useState } from "react";
 import InputBox from "../../components/form/InputBox";
 import FormContainer from "../../components/form/FormContainer";
 import axios from "axios";
-import { useCookies } from "react-cookie";
-
 import AuthText from "../../components/form/AuthText";
-
 import PhoneInput from "../../components/form/PhoneInput";
 import Submit from "../../components/form/Submit";
 import Banner from "../../components/form/Banner";
-
 
 import VerifyEmailModal from "../../components/form/VerifyEmailModal";
 const Signup = () => {
@@ -22,7 +18,6 @@ const Signup = () => {
     const [phone, setPhone] = useState("");
     const [validPhone, setValidPhone] = useState(false);
     const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
     const [hideModal, setHideModal] = useState(true);
 
     const submitData = async () => {
@@ -40,12 +35,13 @@ const Signup = () => {
 
         if (!validEmail) {
             alert("Please enter valid email");
+            return
         }
 
-        if (password !== confirmPassword) {
-            alert("Please confirm the password");
-            return;
-        }
+        if (password.length < 8 && password.length > 0) {
+            alert("Password should not be less than 8 characters")
+            return
+        }    
 
         const data = {
             firstName,
@@ -58,7 +54,7 @@ const Signup = () => {
 
         try {
             await axios.post("http://localhost:4000/api/auth/signup", data);
-            setHideModal(false)
+            setHideModal(false);
         } catch (err) {
             console.log(err.response.status);
             if (err.response.status === 400) {
@@ -75,6 +71,7 @@ const Signup = () => {
     }, [email]);
 
     const validateEmail = (email) => {
+        // eslint-disable-next-line
         var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
         return email.match(mailformat) != null ? true : false;
     };
@@ -106,7 +103,7 @@ const Signup = () => {
                 />
                 <label
                     className={`${
-                        !validEmail && email.length != 0 ? "" : "hidden"
+                        !validEmail && email.length !== 0 ? "" : "hidden"
                     } font-sans text-[12px] text-red`}
                 >
                     Please enter a valid email address
@@ -125,31 +122,26 @@ const Signup = () => {
                     placeholder="Password"
                     state={password}
                     setState={setPassword}
+                    isValid={password.length >= 8 || password.length === 0}
                 />
-                <InputBox
-                    type="password"
-                    placeholder="Confirm Password"
-                    state={confirmPassword}
-                    setState={setConfirmPassword}
-                    isValid={
-                        password === confirmPassword ||
-                        confirmPassword.length === 0
-                    }
-                />
+
                 <label
-                    className={`${
-                        password != confirmPassword &&
-                        confirmPassword.length !== 0
-                            ? ""
-                            : "hidden"
-                    } font-sans text-[12px] text-red`}
+                    className={`font-sans text-[12px]`}
                 >
-                    Password does not match
+                    Password should be 8 characters
                 </label>
+
+                <p className="font-sans text-[12px] mt-[16px]">By clicking Sign Up you are indicating that you have read and acknowledged the <span className=" text-royalBlue cursor-pointer text-[12px]">Terms of Service</span> and <span className=" text-royalBlue cursor-pointer text-[12px]">Privacy Notice</span></p>
+
+                
                 <Submit signup={true} submitData={submitData} />
             </FormContainer>
 
-            <VerifyEmailModal email={email} hidden={hideModal} setHideModal={setHideModal}/>
+            <VerifyEmailModal
+                email={email}
+                hidden={hideModal}
+                setHideModal={setHideModal}
+            />
         </div>
     );
 };

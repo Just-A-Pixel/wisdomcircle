@@ -11,26 +11,26 @@ import { useNavigate } from "react-router-dom";
 const Login = () => {
     const [value, setValue] = useState("");
     const [password, setPassword] = useState("");
-    const [validPass, setValidPass] = useState(true);
     const [invalidEmailOrPhone, setInvalidEmailOrPhone] = useState("none");
     const [invalidMessage, setInvalidMessage] = useState({
         code: null,
         message: null,
     });
 
+    // eslint-disable-next-line
     const [cookies, setCookie, removeCookie] = useCookies(["jwt"]);
+    
     const navigate = useNavigate();
     const checkValueValidity = () => {
-        var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
         var phoneFormat = /^\d+$/;
 
         let emailMatch = checkEmail()
-        let phoneMatch = value.match(phoneFormat) != null && value.length == 10 ? true : false;
+        let phoneMatch = value.match(phoneFormat) !== null && value.length === 10 ? true : false;
 
-        if(emailMatch || phoneMatch || value.length == 0) return "none"
+        if(emailMatch || phoneMatch || value.length === 0) return "none"
         else if(!phoneMatch) return "phone"
     };
-
+    
     useEffect(() => {
       setInvalidEmailOrPhone(checkValueValidity())
       let validity = checkValueValidity()
@@ -42,6 +42,7 @@ const Login = () => {
     }, [value])
 
     const checkEmail = () => {
+      // eslint-disable-next-line
         var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
         return value.match(mailformat) != null ? true : false;
     };
@@ -71,7 +72,7 @@ const Login = () => {
             );
             setInvalidMessage({ code: null, message: null });
             setCookie("jwt", res.data.accessToken);
-            navigate("/home");
+            navigate("/");
         } catch (err) {
             const status = err.response.status;
             if (status === 404) {

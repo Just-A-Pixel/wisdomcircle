@@ -11,7 +11,7 @@ function App() {
         <BrowserRouter>
             <img src={logo} className="my-[40px] mx-auto lg:hidden" />
                 <Routes>
-                    <Route path="/home" element={<Home />} />
+                    <Route path="/" element={<Home />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/signup" element={<Signup />} />
                 </Routes>
