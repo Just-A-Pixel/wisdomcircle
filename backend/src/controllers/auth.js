@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const {Op} = require("@sequelize/core")
 const User = require("../models/user");
 const {transporter} = require("../config/mailConfig")
 
@@ -33,17 +34,22 @@ const signup = async (req, res) => {
 
 const signin = async (req, res) => {
     try {
-        const user = await User.findOne({ where: { email: req.body.email } });
+        const user = await User.findOne({
+            where: {
+                [Op.or]: { phone: req.body.phone, email: req.body.email },
+            },
+        });
         if (user == null) {
             res.status(404).json({ message: "User could not be found" });
         }
-        if (await bcrypt.compare(req.body.password, user.dataValues.password)) {
+        else if (await bcrypt.compare(req.body.password, user.dataValues.password)) {
             const accessToken = jwt.sign(user.dataValues.id, "secret");
             res.json({ accessToken });
         } else {
             res.status(401).json({ message: "Wrong email or password" });
         }
     } catch (err) {
+        console.log(err)
         res.status(500).json({ message: "Internal server error", err });
     }
 };
@@ -65,11 +71,7 @@ const verifyEmail = async (req, res) => {
         });
         res.redirect('http://localhost:3000/login')
     } catch (err) {
-        console.log(err)
-        if (err.name === "SequelizeUniqueConstraintError") {
-            res.status(400).json({ message: "User already exists", err });
-        }
-        else res.status(400).send("Email verification failed, possibly the link is invalid or expired");
+        res.status(400).send("Email verification failed, possibly the link is invalid or expired");
     }    
 }
 
