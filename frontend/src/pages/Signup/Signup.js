@@ -38,6 +38,11 @@ const Signup = () => {
             return
         }
 
+        if (!validPhone) {
+            alert("Please enter a valid phone number")
+            return
+        }   
+
         if (password.length < 8 && password.length > 0) {
             alert("Password should not be less than 8 characters")
             return
@@ -122,7 +127,6 @@ const Signup = () => {
                     placeholder="Password"
                     state={password}
                     setState={setPassword}
-                    isValid={password.length >= 8 || password.length === 0}
                 />
 
                 <label

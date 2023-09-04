@@ -3,7 +3,7 @@ import cross from "../../assets/cross.svg"
 const VerifyEmailModal = ({email, hidden = true, setHideModal}) => {
     return (
         <div
-            className={`absolute rounded-lg top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 max-w-[486px] max-h-[252px] bg-white ${hidden?"hidden":""}`}
+            className={`absolute rounded-lg top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 max-w-[486px] bg-white ${hidden?"hidden":""}`}
             style={{ boxShadow: "0 0 100px 1000px rgba(0, 0, 0, 0.5)" }}
         >
             <div className="flex justify-start">
