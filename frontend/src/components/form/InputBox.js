@@ -27,7 +27,9 @@ const InputBox = ({ type, placeholder, state, setState, id = "", isValid = true 
             />
             {type === "password" ? (
                 <span
-                    className={`px-[16px] py-[12px] mt-[16px] border border-l-0 focus:outline-none focus:border-black ${
+                    className={`px-[16px] py-[12px] mt-[16px] border border-l-0 focus:outline-none focus:border-black
+                    ${isValid?"border-gray-80  focus:border-black":"border-red focus:border-red text-red"}
+                    ${
                         focus ? "border-black" : "border-gray-8"
                     }`}
                 >
